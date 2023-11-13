@@ -1,10 +1,12 @@
 import userSlice from '@/stroe/userSlice';
+import loginSlice from '@/stroe/loginSlice';
 import { configureStore } from '@reduxjs/toolkit';
 
 const store = configureStore({
     reducer: {
         // key : value
-        user: userSlice
+        user: userSlice,
+        isShow: loginSlice,
     }
 });
 

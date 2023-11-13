@@ -1,3 +1,5 @@
+'use client'
+
 import './../css/globals.css'
 import localFont from 'next/font/local'
 import Nav from '@/components/navbar'

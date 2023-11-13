@@ -13,7 +13,7 @@ const initialState: LoginState = {
 };
 
 const userSlice = createSlice({
-    name: 'login',
+    name: 'user',
     initialState,
     reducers: {
         setProfile: (state, action: PayloadAction<LoginState>) => {

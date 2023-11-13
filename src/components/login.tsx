@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect } from "react"
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setProfile, LoginState } from "@/stroe/userSlice";
 import { RootState } from "@/app/store";
 
@@ -14,7 +13,6 @@ interface loginForm {
 };
 
 export default function LoginModal() {
-    const userState = useSelector((state: RootState) => state.user);
     const loginLabelCss = "text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300";
     const loginInputCss = "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white";
     const formList: loginForm[] = [
@@ -22,13 +20,15 @@ export default function LoginModal() {
         { id: "password", name: "password", placeholder: "••••••••", content: "Your password", type: "password" },
     ];
     const loginModalCss = (stauts: Boolean): string => {
-        let css = "overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center"
-        return (stauts) ? css : "${css} hidden";
+        let css = "overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center";
+        return (stauts) ? `${css} flex` : `${css} hidden`;
     };
-
-    useEffect(() => {
-        login();
-    }, []);
+    const loginBackgroundCss = (stauts: Boolean): string => {
+        let css = "bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40";
+        return (stauts) ? css : `${css} hidden`;
+    }
+    const isShow = useSelector((state: RootState) => state.isShow);
+    const dispatch = useDispatch();
 
     // TODO: add Call api and set user profile
     const login = async () => {
@@ -39,13 +39,13 @@ export default function LoginModal() {
             email: "sles4511@gmail.com",
             flag: true
         }
-        setProfile(data);
+        dispatch(setProfile(data));
     };
 
     return (
         <>
             <div>
-                <div id="login-modal" className={loginModalCss(userState.flag)}>
+                <div id="login-modal" className={loginModalCss(isShow.isShowModal)}>
                     <div className="relative w-full max-w-md px-4 h-full md:h-auto">
                         {/* Modal content  */}
                         <div className="bg-white rounded-lg shadow relative dark:bg-gray-700">
@@ -82,7 +82,7 @@ export default function LoginModal() {
                         </div>
                     </div>
                 </div>
-                {(userState.flag) ? <div className="bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40 hidden"></div> : ""}
+                <div className={loginBackgroundCss(isShow.isShowModal)}></div>
             </div >
         </>
     )
