@@ -14,18 +14,15 @@ const initialState: LoginState = {
     flag: false,
 };
 
+
 const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setProfile: (state, action: PayloadAction<LoginState>) => {
-            // 沒用
-            state = action.payload;
-            return action.payload;
-        },
-        setLogout: (state) => {
-            state = initialState
-        }
+        setProfile: (state, action: PayloadAction<LoginState>) =>
+            action.payload,
+        setLogout: (state) =>
+            initialState
     },
 });
 
