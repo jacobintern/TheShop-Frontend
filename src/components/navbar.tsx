@@ -37,6 +37,7 @@ const userNav: userNav[] = [
 
 export default function Navigationbar() {
   const userState = useSelector((state: RootState) => state.user);
+
   const [navigation, setNavigation] = useState<topNav[]>(navList);
 
   const clickedTopNav = (current: (Boolean)): string => {

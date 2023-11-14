@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { stat } from "fs";
+import { act } from "react-dom/test-utils";
 
 export interface LoginState {
     name: string,
@@ -17,7 +19,9 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         setProfile: (state, action: PayloadAction<LoginState>) => {
+            // 沒用
             state = action.payload;
+            return action.payload;
         },
         setLogout: (state) => {
             state = initialState
