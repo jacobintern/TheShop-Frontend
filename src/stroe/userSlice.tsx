@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { stat } from "fs";
-import { act } from "react-dom/test-utils";
 
 export interface LoginState {
     name: string,

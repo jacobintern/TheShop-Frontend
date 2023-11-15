@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setProfile, LoginState } from "@/stroe/userSlice";
 import { RootState } from "@/app/store";
@@ -15,6 +15,7 @@ interface loginForm {
 };
 
 export default function LoginModal() {
+    const [formData, setFormData] = useState<Record<string, string>>({});
     const loginLabelCss = "text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300";
     const loginInputCss = "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white";
     const formList: loginForm[] = [
@@ -32,8 +33,16 @@ export default function LoginModal() {
     const isShow = useSelector((state: RootState) => state.isShow);
     const dispatch = useDispatch();
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, name: string) =>
+        // 更新 formData 狀態，使用新的值
+        setFormData({
+            ...formData,
+            [name]: e.target.value,
+        });
+
     // TODO: add Call api and set user profile
     const login = async () => {
+        console.log(formData);
         // 登入
         // 先給假資料
         let data: LoginState = {
@@ -57,12 +66,12 @@ export default function LoginModal() {
                                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
                                 </button>
                             </div>
-                            <form className="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="#">
+                            <div className="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8">
                                 <h3 className="text-xl font-medium text-gray-900 dark:text-white">Sign in to our platform</h3>
                                 {formList.map((item, index) =>
                                     <div key={index}>
                                         <label htmlFor={item.name} className={loginLabelCss}>{item.content}</label>
-                                        <input type={item.type} name={item.name} id={item.id} placeholder={item.placeholder} className={loginInputCss} required />
+                                        <input type={item.type} name={item.name} id={item.id} placeholder={item.placeholder} className={loginInputCss} onChange={(e) => handleInputChange(e, item.name)} required />
                                     </div>
                                 )}
 
@@ -81,7 +90,7 @@ export default function LoginModal() {
                                 <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
                                     Not registered? <a href="#" className="text-blue-700 hover:underline dark:text-blue-500">Create account</a>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
