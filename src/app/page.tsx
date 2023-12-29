@@ -3,6 +3,7 @@
 import LoginModal from "@/components/login";
 import { Provider } from 'react-redux';
 import store from '@/app/store';
+import Product from '@/components/product'
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <Provider store={store}>
         <LoginModal />
       </Provider>
+      <Product />
     </main>
   )
 }
