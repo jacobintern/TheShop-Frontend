@@ -2,10 +2,16 @@
 import React, { useEffect, useState } from 'react';
 
 export default function Product() {
-    const url = process.env.NEXT_PUBLIC_API_URL + '/api/product/list';
+    const url = process.env.NEXT_PUBLIC_API_URL + '/api/product/list?page=1&offset=10&fetch=10';
     const products = async () => {
         try {
-            const res = await fetch(url as string);
+            const res = await fetch(url as string, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8',
+                    'Accept': '*/*'
+                }
+            });
             const data = await res.json();
             console.log(data);
         } catch (err) {
@@ -21,6 +27,7 @@ export default function Product() {
                 <button onClick={products}>call products</button>
 
                 {/* for loop get product list */}
+
                 <div className="group relative">
                     <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                         <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
