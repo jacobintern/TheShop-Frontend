@@ -35,3 +35,5 @@ yarn-error.log*
 next-env.d.ts
 
 .vscode/
+# local env (API URL defaults to http://127.0.0.1:8080 in src/lib/api.ts)
+.env
