@@ -1,27 +1,27 @@
-'use client'
+import type { Metadata } from 'next';
+import './../css/globals.css';
+import localFont from 'next/font/local';
+import Nav from '@/components/navbar';
+import LoginModal from '@/components/login';
+import Providers from '@/components/providers';
 
-import './../css/globals.css'
-import localFont from 'next/font/local'
-import Nav from '@/components/navbar'
-import { Provider } from 'react-redux';
-import store from '@/app/store';
+const myFont = localFont({ src: '../fonts/jf-openhuninn-2.0.ttf' });
 
-const myFont = localFont({ src: '../fonts/jf-openhuninn-2.0.ttf' })
+export const metadata: Metadata = {
+  title: 'TheShop',
+  description: 'TheShop storefront',
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-      </head>
-      <body className={myFont.className}>
-        <Provider store={store}>
-          <Nav />{children}
-        </Provider>
+      <body className={`${myFont.className} min-h-screen bg-white text-gray-900`}>
+        <Providers>
+          <Nav />
+          <LoginModal />
+          <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">{children}</main>
+        </Providers>
       </body>
     </html>
-  )
+  );
 }
