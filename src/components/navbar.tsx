@@ -26,6 +26,9 @@ const memberNav: NavLink[] = [
   { name: 'Orders', href: '/orders' },
 ];
 
+// 手機版主選單已經有 Orders，會員區只列主選單沒有的項目，避免重複
+const mobileMemberNav: NavLink[] = memberNav.filter((item) => !topNav.some((top) => top.href === item.href));
+
 function isCurrent(pathname: string, href: string): boolean {
   return href === '/' ? pathname === '/' : pathname.startsWith(href);
 }
@@ -155,7 +158,7 @@ export default function Navigationbar() {
               {member ? (
                 <>
                   <div className="px-3 text-sm text-gray-500">Signed in as {name}</div>
-                  {memberNav.map((item) => (
+                  {mobileMemberNav.map((item) => (
                     <Disclosure.Button key={item.name} as={Link} href={item.href} className={topNavMobileCss(false)}>
                       {item.name}
                     </Disclosure.Button>
